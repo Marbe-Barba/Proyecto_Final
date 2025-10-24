@@ -4,70 +4,91 @@
 
 // preguntar si hay un monstruo que pueda usar como base para mi constructor
 monstruo::monstruo(){
-    nombre = "No identificado";
-    tipo = "No identificado";
-    tamaño = "No identificado";
-    categoria = "No identificada";
+    nombre = "Desconocido";
+    tipo = "N/A";
+    tamaño = "N/A";
+    categoria = "N/A";
     clase_de_armadura = 0;
     puntos_de_golpe = 0;
     dificultad_pelea = 0;
     puntos_de_vida = 0;
 }
 
+monstruo::monstruo(std::string n, std::string t, std::string ta, std::string c, int ac, int hp, double cr, double vida){
+    nombre = n;
+    tipo = t; 
+    tamaño = ta; 
+    categoria = c;
+    clase_de_armadura = ac;
+    puntos_de_golpe = hp;
+    dificultad_pelea = dif;
+    puntos_de_vida = vida;
+}
+
 monstruo::~monstruo(){
 
 }
 
-std::string monstruo::getNombre {
-    return nombre;
+std::string monstruo::getName() {
+    return name;
 }
 
-std::string monstruo::getTipo {
-    return tipo;
+std::string monstruo::getType() {
+    return type;
 }
 
-std::string monstruo::getTamaño{
-    return tamaño;
+std::string monstruo::getSize(){
+    return size;
 }
 
-std::string monstruo::getCategoria {
-    return categoria;
+std::string monstruo::getAlign() {
+    return align;
 }
 
-int monstruo::getPuntosDeGolpe {
-    return puntos_de_golpe;
+int monstruo::getAC (){
+    return ac;
 }
 
-int monstruo::getDificultadPelea {
-    return dificultad_pelea;
+int monstruo::getHP() {
+    return hp;
 }
 
-int monstruo::getPuntosDeVida {
+int monstruo::getCR() {
+    return cr;
+}
+
+int monstruo::getPuntosDeVida () {
     return puntos_de_vida;
 }
 
 void monstruo::mostrarInformacion(){
-    std::cout << " El nombre del mounstro es: " << nombre << std::endl;
-    std::cout << " es de tipo: " << tipo << std::endl;
-    std::cout << " su tamaño es: " << tamaño << std::endl;
-    std::cout << " su align es: " << categoria << std::endl;
-    std::cout << " su ac es: " << clase_de_armadura << std::endl;
-    std::cout << " su hp es: " << puntos_de_golpe << std::endl;
-    std::cout << " la dificultad de la pelea es: " << dificultad_pelea << std::endl;
-
+    std::cout << "=== Información del monstruo ===\n";
+    std::cout << " Nombre: " << name << std::endl;
+    std::cout << " Tipo: " << type << std::endl;
+    std::cout << " Tamaño: " << size << std::endl;
+    std::cout << " Align: " << align << std::endl;
+    std::cout << " AC: " << ac << std::endl;
+    std::cout << " HP: " << hp << std::endl;
+    std::cout << " Dificultad de la pelea: " << cr << std::endl;
+    std::cout << " Puntos de vida actuales: " << puntos_de_vida << std::endl;
 }
 
 //preguntar si este método esta bien
-void monstruo::recibirDaño(){
+void monstruo::recibirDaño(double daño){
     double daño;
     std::cout << "El daño recibido es de: "
     std::cin >> daño;
     puntos_de_vida -= daño;
     if (puntos_de_vida < 0){
-        puntos_de_vida = 0
+        puntos_de_vida = 0;
+        std::cout << nombre << "ha perdido la batalla. \n";
     }
 }
 
-double monstruo::Vida() {
-    return puntos_de_vida;
+// hay algúna formula de daño en especifico???
+double monstruo::atacar(){
+    double posibledaño 
+    posibledaño = puntos_de_golpe * 0.2 + dificultad_pelea * 5;
+    std::cout << nombre << " atacó con " << posibledaño << "puntos de daño. \n";
+    return posibledaño;
 }

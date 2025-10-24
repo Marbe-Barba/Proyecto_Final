@@ -1,10 +1,39 @@
-class catalogo {
-public: 
+#include <iostream>
+#include <cstdlib>
+#include "monstruo.hpp"
+
+
+template <typename T>
+
+class catalogo{
+private:
+    class Nodo{
+    public:
+        T dato;
+        Nodo<T> *izquierda;
+        Nodo<T> *derecha;
+
+        Nodo (T nDato);
+    };
+
+    int cantidad;
+    void agregarRecursivo(Nodo*& nodo, T valor);
+    void mostrarRecursivo(Nodo *nodo);
+    void buscarNumero(Nodo* nodo, int& contador, int elegido, T& resultado);
+
+public:
     catalogo();
     ~catalogo();
-    agregarMonstruo (Monstruo m);
+    
+    void agregarFinal(T valor);
+    void mostrar();
+    T aleatorio();
+
+    void agregarMonstruo (Monstruo m);
     void mostrarCatalogo();
-    g
-private:
-//llamar a la lista de monstruos
-}
+    Monstruo generarAleatorio();
+    void cargarCSV (std::string& nombreArchivo);
+
+};
+
+#include "catalogo.cpp"

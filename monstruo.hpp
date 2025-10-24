@@ -1,31 +1,35 @@
 #include <iostream>
+#include <string>
 
 class monstruo {
 public: 
+    //se puede no poner el constructor sin parametros
+    // si se van a utilizar los datos de la tabla, es necesario hacer las clases?
     monstruo();
-    ~monstruo();
-    std::string getNombre();
-    std::string getTipo();
-    std::string getTamaño();
-    std::string getCategoria();
-    int getClaseDeArmadura();
-    int getPuntosDeGolpe();
-    double getDificultadPelea();
-    double getPuntosDeVida();
-    void mostrarInformacion();
-    void recibirDaño();
-    double Vida();
+    monstruo(std::string nombre, std::string tipo, std::string tamaño, std::string categoria, int clase, int golpe, double dificultad, double vida);
 
+    std::string getName();
+    std::string getType();
+    std::string getSize();
+    std::string getAlign();
+    int getAC();
+    int getHP();
+    double getCR();
+    double getPuntosDeVida();
+
+    void mostrarInformacion();
+    void recibirDaño(double daño);
+    double atacar();
 
 private:
 //Atributos del monstruo
-    std::string nombre;
-    std::string tipo;
-    std::string tamaño;
-    std::string categoria;
-    int clase_de_armadura;
-    int puntos_de_golpe;
-    double dificultad_pelea;
+    std::string name;
+    std::string type;
+    std::string size;
+    std::string align;
+    int ac;
+    int hp;
+    double cr;
     double puntos_de_vida;
 
 }

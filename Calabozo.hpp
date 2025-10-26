@@ -1,17 +1,11 @@
-#include "cuartos.hpp"
+#include <iostream>
 #include "ListaDoble.hpp"
 
 
 class calabozo {
 public: 
-    calabozo(Jugador j);
-    ~calabozo();
-    void generarCuartos(int n);
-    void iniciar();
+    void mostrarCalabozo();
     
 private:
     ListaDoble<Cuarto> cuartos;
-    Jugador jugador;
-    Catalogo catalogo;
-
 }

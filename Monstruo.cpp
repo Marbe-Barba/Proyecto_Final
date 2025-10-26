@@ -14,19 +14,15 @@ monstruo::monstruo(){
     puntos_de_vida = 0;
 }
 
-monstruo::monstruo(std::string n, std::string t, std::string ta, std::string c, int ac, int hp, double cr, double vida){
-    nombre = n;
-    tipo = t; 
-    tamaño = ta; 
-    categoria = c;
-    clase_de_armadura = ac;
-    puntos_de_golpe = hp;
-    dificultad_pelea = dif;
+monstruo::monstruo(string nam, string typ, string siz, string al, int a, int h, double c, double vida){
+    nombre = nam;
+    tipo = typ; 
+    tamaño = siz; 
+    categoria = al;
+    clase_de_armadura = a;
+    puntos_de_golpe = h;
+    dificultad_pelea = c;
     puntos_de_vida = vida;
-}
-
-monstruo::~monstruo(){
-
 }
 
 std::string monstruo::getName() {
@@ -61,6 +57,38 @@ int monstruo::getPuntosDeVida () {
     return puntos_de_vida;
 }
 
+std::string monstruo::setName(std::string newName) {
+    name = newName;
+}
+
+std::string monstruo::setType(std::string newType) {
+    type = newType;
+}
+
+std::string monstruo::setSize(std::string newSize){
+    size = newSize;
+}
+
+std::string monstruo::setAlign(std::string newAlign) {
+    align = newAlign;
+}
+
+int monstruo::setAC(int newAc){
+    ac = newAc;
+}
+
+int monstruo::setHP(int newHP) {
+    hp = newHP;
+}
+
+double monstruo::setCR(double newCR) {
+    cr = newCR;
+}
+
+double monstruo::setPuntosDeVida(double newVida) {
+    puntos_de_vida = newVida;
+}
+
 void monstruo::mostrarInformacion(){
     std::cout << "=== Información del monstruo ===\n";
     std::cout << " Nombre: " << name << std::endl;
@@ -73,22 +101,6 @@ void monstruo::mostrarInformacion(){
     std::cout << " Puntos de vida actuales: " << puntos_de_vida << std::endl;
 }
 
-//preguntar si este método esta bien
-void monstruo::recibirDaño(double daño){
-    double daño;
-    std::cout << "El daño recibido es de: "
-    std::cin >> daño;
-    puntos_de_vida -= daño;
-    if (puntos_de_vida < 0){
-        puntos_de_vida = 0;
-        std::cout << nombre << "ha perdido la batalla. \n";
-    }
-}
 
-// hay algúna formula de daño en especifico???
-double monstruo::atacar(){
-    double posibledaño 
-    posibledaño = puntos_de_golpe * 0.2 + dificultad_pelea * 5;
-    std::cout << nombre << " atacó con " << posibledaño << "puntos de daño. \n";
-    return posibledaño;
-}
+
+

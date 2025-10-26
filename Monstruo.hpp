@@ -6,7 +6,7 @@ public:
     //se puede no poner el constructor sin parametros
     // si se van a utilizar los datos de la tabla, es necesario hacer las clases?
     monstruo();
-    monstruo(std::string nombre, std::string tipo, std::string tamaño, std::string categoria, int clase, int golpe, double dificultad, double vida);
+    monstruo(string nam, string typ, string tamaño, string categoria, int clase, int golpe, double dificultad, double vida);
 
     std::string getName();
     std::string getType();
@@ -16,10 +16,17 @@ public:
     int getHP();
     double getCR();
     double getPuntosDeVida();
+    
+    std::string setName(std::string newName);
+    std::string setType(std::string newType);
+    std::string setSize(std::string newSize);
+    std::string setAlign(std::string newAlign);
+    int setAC(int newAc);
+    int setHP(int newHP);
+    double setCR(double newCR);
+    double setPuntosDeVida(double newVida);
 
     void mostrarInformacion();
-    void recibirDaño(double daño);
-    double atacar();
 
 private:
 //Atributos del monstruo
@@ -31,5 +38,4 @@ private:
     int hp;
     double cr;
     double puntos_de_vida;
-
 }

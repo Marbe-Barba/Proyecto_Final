@@ -6,63 +6,88 @@
 
 ```mermaid
 classDiagram
-  class Monstruo {
-    +String nombre
-    +String tipo
-    +int fuerza
-    +int salud
-    +String atacar()
-  }
-  class Catalogo {
-    +List<Monstruo> monstruos
-    +cargarMonstruosCSV()
-    +Monstruo elegirMonstruoAleatorio()
-  }
-  class Calabozo {
-    +DoublyLinkedList<Cuarto> cuartos
-    +generarCuartos()
-    +asignarMonstruoACuarto()
-  }
-  class Cuarto {
-    +Monstruo monstruo
-    +String descripcion
-    +mostrarMonstruo()
-  }
-  class Jugador {
-    +String nombre
-    +LinkedList<Monstruo> monstruosDerrotados
-    +derrotarMonstruo(Monstruo monstruo)
-    +verMonstruosDerrotados()
-  }
+class Monstruo {
+  - string name
+  - string type
+  - string size
+  - string align
+  - int ac
+  - int hp
+  - double cr
+  - double puntos_de_vida
+  + getName() string
+  + getType() string
+  + getSize() string
+  + getAlign() string
+  + getAC() int
+  + getHP() int
+  + getCR() double
+  + getPuntosDeVida() double
+  + setName(string n) string
+  + setType(string t) string
+  + setSize(string s) string
+  + setAlign(string al) string
+  + setAC(int a) int
+  + setHP(int h) int
+  + setCR(int c) double
+  + setPuntosDeVida (int p) double
+  + mostrarInformacion() void
+}
 
-  class ArbolBinario{
-    +String nombre
-    +LinkedList<Monstruo> monstruosDerrotados
-    +derrotarMonstruo(Monstruo monstruo)
-    +verMonstruosDerrotados()
-  }
-    
-  class ListaLigada {
-      +String nombre
-      +LinkedList<Monstruo> monstruosDerrotados
-      +derrotarMonstruo(Monstruo monstruo)
-      +verMonstruosDerrotados()
-  }
+class Catalogo {
+  - ArbolBinario<Monstruo> arbolito
+  + subirDesdeCSV(monsters.csv string)
+  + obtenerMontruoAleatorio() Monstruo
+}
 
-  class ListaLigadaDoble {
-    +String nombre
-    +LinkedList<Monstruo> monstruosDerrotados
-    +derrotarMonstruo(Monstruo monstruo)
-    +verMonstruosDerrotados()
-  }
+class Cuartos {
+  - Monstruo monstruo
+  + insertarMonstruo() void
+  + getMonstruo() Monstruo
+}
 
-    
-  Calabozo --> ListaLigadaDoble
-  ListaLigadaDoble --> Cuarto
-  Catalogo --> ArbolBinario
-  Cuarto --> Catalogo
-  ArbolBinario --> Monstruo
-  Jugador --> ListaLigada
-  ListaLigada --> Monstruo
+class Calabozo {
+  - ListaLigada<Cuartos> cuartos
+  + mostrarCalabozo()
+
+}
+
+class Jugador {
+  - string usuario
+  - ListaLigada<Monstruo> Vencidos
+  + agregarVencidos (Monstruo)
+  + muestraVencidos()
+}
+
+
+class ArbolBinario~T~ {
+
+}
+
+class ListaLigadaDoble~T~ {
+  - Node* comiezo
+  - Node* final
+  + append(T)
+  + print()
+}
+
+class ListaLigada~T~ {
+  - Node* head
+  + ListaLigada()
+  + ~ListaLigada()
+  + borrarLista()
+  + mostarLista()
+}
+
+
+Catalogo --> ArbolBinario~Monstruo~
+ArbolBinario~Monstruo~ --> Monstruo
+
+Cuartos --> Monstruo
+Calabozo --> ListaLigadaDoble~Cuartos~
+ListaLigadaDoble~Cuartos~ --> Cuartos
+
+Jugador --> ListaLigada~Monstruo~
+ListaLigada~Monstruo~ --> Monstruo
 ```
 

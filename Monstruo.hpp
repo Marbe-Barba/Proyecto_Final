@@ -27,10 +27,14 @@ public:
 
     void mostrarInformacion();
     
+    bool operator<(Monstruo& otro){
+        return name < otro.name;
+    }
+
     friend std::ostream& operator<<(std::ostream& os, const Monstruo& monstruo){
         os << monstruo.name << ", type : " << monstruo.type << ", size : " << monstruo.size << ", align : " << monstruo.align << ", ac : " << monstruo.ac << ", hp : " << monstruo.hp << ", cr : " << monstruo.cr << ", vida : " << monstruo.puntos_de_vida;
         return os;
-    }
+    };
 
 private:
 //Atributos del monstruo

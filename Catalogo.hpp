@@ -1,28 +1,24 @@
-#include <iostream>
 #pragma once
+#include <iostream>
 #include <string>
-#include <random>
-#include "Monstruo.hpp"
 #include "ArbolBinario.hpp"
 
-// Comparador por nombre para el BST
-struct ComparadorMonstruo {
-    bool operator()(const Monstruo& a, const Monstruo& b) const {
-        return a.getName() < b.getName();
-    }
-};
 
 class Catalogo {
 public:
     Catalogo();
+    ~Catalogo();
 
-    bool cargarDesdeCSV(const std::string& rutaArchivo); // carga los monstruos desde CSV
-    const Monstruo* getMonstruoAleatorio();               // retorna puntero a monstruo aleatorio
-    std::size_t cantidad() const;                         // retorna cuántos monstruos hay
-    void mostrarCatalogo() const;                         // imprime todos los monstruos ordenados
+    bool cargarCSV(std::string& archivo); 
+
+    Monstruo* obtenerMonstruoAleatorio();
+
+    void mostrarCatalogo();
+
+    void contarNodos(ArbolBinario<Monstruo>::Nodo* nodo, int& cont);
+    void buscarPorNumero(ArbolBinario<Monstruo>::Nodo* nodo, int& cont, int elegido, Monstruo& resultado);
 
 private:
-    BST<Monstruo, ComparadorMonstruo> arbol;
-    std::mt19937 generador;                               // generador de números aleatorios
+    ArbolBinario<Monstruo> arbol;
 };
 

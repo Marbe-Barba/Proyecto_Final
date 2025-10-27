@@ -1,43 +1,29 @@
 #include "Calabozo.hpp"
 #include <iostream>
 
-Calabozo::Calabozo() {
+Calabozo::Calabozo() { }
 
-}
-
-Calabozo::Calabozo(Catalogo* cat) {
-    generarCalabozo(cat);
+Calabozo::Calabozo(Catalogo* c) {
+    generarCalabozo(c);
 }
 
 Calabozo::~Calabozo() {
     cuartos.borrarLista();
 }
 
-void Calabozo::generarCalabozo(Catalogo* cat) {
-    if (!cat) {
-        std::cerr << "Error: el catálogo no está inicializado.\n";
-        return;
+void Calabozo::generarCalabozo(Catalogo* c) {
+    generarCuartos(c);
+}
+
+void Calabozo::generarCuartos(Catalogo* c) {
+    for (int i = 0; i < 20; i++) {
+        Monstruo* m = new Monstruo(c->obtenerMonstruoAleatorio());
+        Cuartos cuarto(i + 1, m);
+        cuartos.insertarFinal(cuarto);
     }
-
-    std::srand(static_cast<unsigned>(std::time(nullptr))); // semilla para aleatorios
-
-    for (int i = 1; i <= 20; ++i) {
-        // Pide un monstruo aleatorio al catálogo
-        const Monstruo* m = cat->getMonstruoAleatorio();
-
-        // Crea un nuevo cuarto con el monstruo
-        Cuarto nuevoCuarto(i, *m);  // si Cuarto usa copia
-        // o Cuarto nuevoCuarto(i, m);  // si Cuarto usa puntero
-
-        // Inserta el cuarto al final de la lista doble
-        cuartos.insertarFinal(nuevoCuarto);
-    }
-
-    std::cout << "✅ Calabozo generado con 20 cuartos.\n";
 }
 
 void Calabozo::mostrarCalabozo() const {
-    std::cout << "\n=== CALABOZO ===\n";
-    cuartos.imprimeLista(); // usa operator<< de Cuarto
+    cuartos.imprimeLista();
+    std::cout << std::endl;
 }
-

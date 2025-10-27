@@ -20,7 +20,7 @@ Monstruo::Monstruo(string nam, string typ, string siz, string al, int a, int h, 
     align = al;
     ac = a;
     hp = h;
-    cp = c;
+    cr = c;
     puntos_de_vida = vida;
 }
 

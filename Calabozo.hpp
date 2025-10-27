@@ -1,15 +1,18 @@
+#pragma once
 #include <iostream>
 #include "ListaLigadaDoble.hpp"
+#include "Catalogo.hpp"
 
 
 class Calabozo {
 public: 
     Calabozo();
-    Calabozo(Catalogo* cat);  
+    Calabozo(Catalogo* c);  
     ~Calabozo();
 
 
-    void generarCalabozo(Catalogo* cat);  
+    void generarCalabozo(Catalogo* c);  
+    void generarCuartos(Catalogo* ca)
     void mostrarCalabozo();   
 
 private:

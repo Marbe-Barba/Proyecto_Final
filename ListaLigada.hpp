@@ -20,8 +20,7 @@ public:
 
     bool insertarFinal(T dato);
     void borrarLista();
-    // No entiendo el insertar por orden
-    /*void insertarOrden(T dato, Comparador comparar);*/
+    void insertarOrdenado(T* obj) {
     void imprimeLista();
 
 }

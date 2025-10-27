@@ -21,25 +21,14 @@ void Jugador::setUsuario(std::string nombre) {
     usuario = nombre;
 }
 
-void Jugador::agregarVencidos (Monstruo* m){
-    if(!m){
-        return;
-    }
+void Jugador::agregarVencidos(Monstruo* m) {
+    if (m == nullptr) return; // Si es null, no hacemos nada
 
-    auto cmpNombre = [](const Monstruo* a, const Monstruo* b) {
-        return a->getName() < b->getName();
-    };
+    // Insertamos al final de la lista ligada
+    vencidos.insertarFinal(m);
+}
 
-    //método de la lista ligada
-    Vencidos.insertarOeden(m, cmpNombre);
-
-    void Jugador::mostrarVencidos() const {
-    std::cout << "\nMonstruos vencidos de "
-              << (usuario.empty() ? "<sin nombre>" : usuario)
-              << ":\n";
-
-    // Nota: imprime direcciones si T = puntero, ya que tu ListaLigada
-    // usa cout << dato. Para imprimir con tu operator<< de Monstruo,
-    // necesitas agregar un método forEach() a la lista.
-    vencidos.imprimeLista();
+void Jugador::mostrarVencidos() const {
+    std::cout << "\nMonstruos vencidos de " << usuario << ":\n";
+    vencidos.imprimeLista(); // usa operator<< de Monstruo
 }

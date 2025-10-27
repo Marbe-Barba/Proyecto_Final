@@ -1,12 +1,11 @@
+#pragma once
 #include <iostream>
 #include "Monsruo.hpp"
 
 class Cuartos {
 public: 
-    Monstruo monstruo;
-
     Cuartos();
-    CuartoS(int idCuarto, Monstruo* m);
+    Cuartos(int idCuarto, Monstruo* m);
     ~Cuartos();
 
     int getId();
@@ -24,4 +23,5 @@ public:
 
 private:
     int id;
+    Monstruo* monstruo;
 }

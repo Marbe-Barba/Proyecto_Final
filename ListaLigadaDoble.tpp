@@ -22,7 +22,6 @@ ListaLigadaDoble<T>::~ListaLigadaDoble() {
 template <typename T>
 bool ListaLigadaDoble<T>::insertarFinal(const T& dato) {
     Nodo* nuevo = new (std::nothrow) Nodo(dato);
-    }
 
     if (!nuevo){
         return false;

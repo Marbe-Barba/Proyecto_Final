@@ -18,29 +18,6 @@ ListaLigada<T>::~ListaLigada() {
 }
 
 template <typename T>
-bool ListaLigada<T>::insertarFinal(T dato) {
-    Nodo* nuevo = new (std::nothrow) Nodo{
-        Nodo = dato;
-    } 
-
-    if (nuevo == nullptr){
-        return false;
-    }
-
-    if (head == nullptr) {
-        head = nuevo;
-        return true;
-    }
-
-    Nodo* temporal = head;
-    while (temporal->next){
-        temporal = temporal->next;
-    }
-    temporal->next = nuevo;
-    return true;
-}
-
-template <typename T>
 void ListaLigada<T>::borrarLista() {
     Nodo* temporal;
     while (head) {
@@ -51,25 +28,21 @@ void ListaLigada<T>::borrarLista() {
     head = nullptr;
 }
 
-/*template <typename T>
-void ListaLigada<T>::insertarOrden(T dato, Comparador comparar){
-    Nodo *nuevo = new (std::nothrow) Nodo {
-        Nodo = dato;
-    }
-
-    if (nuevo == nullptr){
-        return false;
-    }
-
-    if (head == nullptr || comparar(dato, head->dato)){
+template <typename T>
+void ListaLigada<T>::insertarOrdenado(T* obj) {
+    Nodo* nuevo = new Nodo(obj);
+    if (!head || obj->getName() < head->dato->getName()) {
         nuevo->next = head;
         head = nuevo;
-        return true;
+        return;
     }
-
-
+    Nodo* actual = head;
+    while (actual->next && actual->next->dato->getName() < obj->getName()) {
+        actual = actual->next;
+    }
+    nuevo->next = actual->next;
+    actual->next = nuevo;
 }
-*/
 
 template <typename T>
 void ListaLigada<T>::imprimeLista() const {
@@ -77,7 +50,7 @@ void ListaLigada<T>::imprimeLista() const {
     while (temporal) {
         std::cout << temporal->dato;
         if (temporal->next){ 
-        std::cout << ", -> ";
+            std::cout << ", -> ";
         }
         temporal = temporal->next;
     }

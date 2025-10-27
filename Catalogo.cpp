@@ -1,74 +1,95 @@
 #include "Catalogo.hpp"
 #include <fstream>
 #include <sstream>
+#include <cstdlib> 
+#include <ctime> 
 #include <iostream>
 
-Catalogo::Catalogo() : generador(std::random_device{}()) {}
+Catalogo::Catalogo(){
+    srand(time(nullptr));
+}
 
-bool Catalogo::cargarDesdeCSV(const std::string& rutaArchivo) {
-    std::ifstream archivo(rutaArchivo);
-    if (!archivo.is_open()) {
-        std::cerr << "❌ No se pudo abrir el archivo: " << rutaArchivo << "\n";
+Catalogo::~Catalogo(){}
+
+bool Catalogo::cargarCSV(std::string Archivo) {
+    std::ifstream monsters;
+
+    monsters.open(Archivo, ios::in);
+    if (monsters.is_open()==false) {
+        std::cout << "No se pudo abrir el archivo: " << Archivo << "\n";
         return false;
     }
 
+    std::string tmpCols;
+
+    if(!getline(monsters,tmpCols)){
+        std::cout << "El archivo no tiene header \n";
+        monsters.close();
+        return false;
+    } 
+
+    std::cout << "Cargando archivos de creaturas..." << endl;
+
     std::string linea;
-    std::getline(archivo, linea); // opcional: salta encabezado si lo hay
+    while (getline(monsters, linea)) {
+        std::stringstream ss(linea);
 
-    std::size_t insertados = 0;
+        std::string name, type, size, align, tmp_ac, tmp_hp, tmp_cr;
+        int ac, hp;
+        double cr;
 
-    while (std::getline(archivo, linea)) {
-        if (linea.empty()) continue;
+       if (getline(ss, name, ',') &&
+            getline(ss, type, ',') &&
+            getline(ss, size, ',') &&
+            getline(ss, align, ',') &&
+            getline(ss, tmp_ac, ',') &&
+            getline(ss, tmp_hp, ',') &&
+            getline(ss, tmp_cr, ',')) {
 
-        std::istringstream ss(linea);
-        std::string nam, typ, siz, al, acStr, hpStr, crStr, vidaStr;
+            ac = std::stoi(tmp_ac);
+            hp = std::stoi(tmp_hp);
+            cr = std::stod(tmp_cr);
 
-        std::getline(ss, nam, ',');
-        std::getline(ss, typ, ',');
-        std::getline(ss, siz, ',');
-        std::getline(ss, al, ',');
-        std::getline(ss, acStr, ',');
-        std::getline(ss, hpStr, ',');
-        std::getline(ss, crStr, ',');
-        std::getline(ss, vidaStr, ',');
-
-        int ac = 0, hp = 0;
-        double cr = 0.0, vida = 0.0;
-
-        try { ac = std::stoi(acStr); }  catch(...) { ac = 0; }
-        try { hp = std::stoi(hpStr); }  catch(...) { hp = 0; }
-        try { cr = std::stod(crStr); }  catch(...) { cr = 0.0; }
-        try { vida = std::stod(vidaStr);} catch(...) { vida = 0.0; }
-
-        Monstruo nuevo(nam, typ, siz, al, ac, hp, cr, vida);
-
-        if (arbol.insert(nuevo)) ++insertados;
+            Monstruo m(name, type, size, align, ac, hp, cr);
+            arbol.inserta(m);
+        }
     }
 
-    archivo.close();
-    std::cout << "📚 Se cargaron " << insertados << " monstruos en el catálogo.\n";
-    return insertados > 0;
+    monsters.close();
+    std::cout << "Carga completada.\n";
+    return true;
 }
 
-std::size_t Catalogo::cantidad() const {
-    return arbol.size();
+Monstruo* Catalogo::obtenerMonstruoAleatorio() {
+    int total = 0;
+    contarNodos(arbol.raiz, total); 
+
+    if (total == 0) return nullptr;
+
+    int elegido = rand() % total + 1;
+    int contador = 0;
+    Monstruo resultado;
+
+    buscarPorNumero(arbol.raiz, contador, elegido, resultado);
+
+    return new Monstruo(resultado); 
 }
 
-const Monstruo* Catalogo::getMonstruoAleatorio() {
-    if (arbol.size() == 0) {
-        std::cerr << "⚠️ No hay monstruos en el catálogo.\n";
-        return nullptr;
+
+void Catalogo::contarNodos(ArbolBinario<Monstruo>::Nodo* nodo, int& cont){
+    if (!nodo) return;
+    contarNodos(nodo->izq, cont);
+    cont++;
+    contarNodos(nodo->der, cont);
+}
+
+void Catalogo::buscarPorNumero(ArbolBinario<Monstruo>::Nodo* nodo, int& cont, int elegido, Monstruo& resultado){
+    if (!nodo) return;
+    buscarPorNumero(nodo->izq, cont, elegido, resultado);
+    cont++;
+    if (cont == elegido) {
+        resultado = nodo->dato;
+        return;
     }
-
-    std::uniform_int_distribution<std::size_t> dist(0, arbol.size() - 1);
-    std::size_t indice = dist(generador);
-    return arbol.getByInorderIndex(indice);
-}
-
-void Catalogo::mostrarCatalogo() const {
-    std::cout << "=== CATÁLOGO DE MONSTRUOS ===\n";
-    for (std::size_t i = 0; i < arbol.size(); ++i) {
-        const Monstruo* m = arbol.getByInorderIndex(i);
-        if (m) std::cout << i + 1 << ". " << *m << "\n";
-    }
+    buscarPorNumero(nodo->der, cont, elegido, resultado);
 }

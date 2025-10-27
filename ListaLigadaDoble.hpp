@@ -14,8 +14,8 @@ private:
         Nodo(T nDato);
     };
 
-    nodo *head;
-    nodo *tail;
+    Nodo *head;
+    Nodo *tail;
 
 public:
     ListaLigadaDoble();
@@ -24,6 +24,6 @@ public:
     void imprimeLista();
     void borrarLista();
     
-}
+};
 
 #include "ListaLigada.tpp"

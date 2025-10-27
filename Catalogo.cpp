@@ -1,74 +1,74 @@
-#include "catalogo.hpp"
+#include "Catalogo.hpp"
+#include <fstream>
+#include <sstream>
+#include <iostream>
 
-template <typename T>
-catalogo<T>::catalogo() {
-    raiz = nullptr;
-    cantidad = 0;
-}
+Catalogo::Catalogo() : generador(std::random_device{}()) {}
 
-template <typename T>
-catalogo<T>::~catalogo() {}
-
-template <typename T>
-void catalogo<T>::insertarRec(Nodo<T>*& nodo, T dato) {
-    if (!nodo) {
-        nodo = new Nodo<T>(dato);
-        cantidad++;
-    } else if (dato.getNombre() < nodo->dato.getNombre()) {
-        insertarRec(nodo->izq, dato);
-    } else {
-        insertarRec(nodo->der, dato);
+bool Catalogo::cargarDesdeCSV(const std::string& rutaArchivo) {
+    std::ifstream archivo(rutaArchivo);
+    if (!archivo.is_open()) {
+        std::cerr << "❌ No se pudo abrir el archivo: " << rutaArchivo << "\n";
+        return false;
     }
-}
 
-template <typename T>
-void catalogo<T>::insertar(T dato) {
-    insertarRec(raiz, dato);
-}
+    std::string linea;
+    std::getline(archivo, linea); // opcional: salta encabezado si lo hay
 
-template <typename T>
-void catalogo<T>::mostrarRec(Nodo<T>* nodo) const {
-    if (!nodo) return;
-    mostrarRec(nodo->izq);
-    nodo->dato.mostrarInformacion();
-    mostrarRec(nodo->der);
-}
+    std::size_t insertados = 0;
 
-template <typename T>
-void catalogo<T>::mostrar() const {
-    if (!raiz) {
-        std::cout << "El catálogo está vacío.\n";
-        return;
+    while (std::getline(archivo, linea)) {
+        if (linea.empty()) continue;
+
+        std::istringstream ss(linea);
+        std::string nam, typ, siz, al, acStr, hpStr, crStr, vidaStr;
+
+        std::getline(ss, nam, ',');
+        std::getline(ss, typ, ',');
+        std::getline(ss, siz, ',');
+        std::getline(ss, al, ',');
+        std::getline(ss, acStr, ',');
+        std::getline(ss, hpStr, ',');
+        std::getline(ss, crStr, ',');
+        std::getline(ss, vidaStr, ',');
+
+        int ac = 0, hp = 0;
+        double cr = 0.0, vida = 0.0;
+
+        try { ac = std::stoi(acStr); }  catch(...) { ac = 0; }
+        try { hp = std::stoi(hpStr); }  catch(...) { hp = 0; }
+        try { cr = std::stod(crStr); }  catch(...) { cr = 0.0; }
+        try { vida = std::stod(vidaStr);} catch(...) { vida = 0.0; }
+
+        Monstruo nuevo(nam, typ, siz, al, ac, hp, cr, vida);
+
+        if (arbol.insert(nuevo)) ++insertados;
     }
-    mostrarRec(raiz);
+
+    archivo.close();
+    std::cout << "📚 Se cargaron " << insertados << " monstruos en el catálogo.\n";
+    return insertados > 0;
 }
 
-template <typename T>
-int catalogo<T>::contar() const {
-    return cantidad;
+std::size_t Catalogo::cantidad() const {
+    return arbol.size();
 }
 
-template <typename T>
-void catalogo<T>::recorrerYSeleccionar(Nodo<T>* nodo, int& contador, int elegido, T& resultado) const {
-    if (!nodo) return;
-    recorrerYSeleccionar(nodo->izq, contador, elegido, resultado);
-    contador++;
-    if (contador == elegido) {
-        resultado = nodo->dato;
-        return;
+const Monstruo* Catalogo::getMonstruoAleatorio() {
+    if (arbol.size() == 0) {
+        std::cerr << "⚠️ No hay monstruos en el catálogo.\n";
+        return nullptr;
     }
-    recorrerYSeleccionar(nodo->der, contador, elegido, resultado);
+
+    std::uniform_int_distribution<std::size_t> dist(0, arbol.size() - 1);
+    std::size_t indice = dist(generador);
+    return arbol.getByInorderIndex(indice);
 }
 
-template <typename T>
-T catalogo<T>::elegirAleatorio() const {
-    if (!raiz) {
-        std::cout << "El catálogo está vacío.\n";
-        exit(1);
+void Catalogo::mostrarCatalogo() const {
+    std::cout << "=== CATÁLOGO DE MONSTRUOS ===\n";
+    for (std::size_t i = 0; i < arbol.size(); ++i) {
+        const Monstruo* m = arbol.getByInorderIndex(i);
+        if (m) std::cout << i + 1 << ". " << *m << "\n";
     }
-    int elegido = (rand() % cantidad) + 1;
-    int contador = 0;
-    T resultado;
-    recorrerYSeleccionar(raiz, contador, elegido, resultado);
-    return resultado;
 }

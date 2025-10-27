@@ -1,95 +1,94 @@
-#include "monstruo.hpp"
+#include "Monstruo.hpp"
 #include <iostream>
 
 
-// preguntar si hay un monstruo que pueda usar como base para mi constructor
-monstruo::monstruo(){
-    nombre = "Desconocido";
-    tipo = "N/A";
-    tamaño = "N/A";
-    categoria = "N/A";
-    clase_de_armadura = 0;
-    puntos_de_golpe = 0;
-    dificultad_pelea = 0;
+Monstruo::Monstruo(){
+    name = "Desconocido";
+    type = "N/A";
+    size = "N/A";
+    align = "N/A";
+    ac = 0;
+    hp = 0;
+    cr = 0;
     puntos_de_vida = 0;
 }
 
-monstruo::monstruo(string nam, string typ, string siz, string al, int a, int h, double c, double vida){
-    nombre = nam;
-    tipo = typ; 
-    tamaño = siz; 
-    categoria = al;
-    clase_de_armadura = a;
-    puntos_de_golpe = h;
-    dificultad_pelea = c;
+Monstruo::Monstruo(string nam, string typ, string siz, string al, int a, int h, double c, double vida){
+    name = nam;
+    type = typ; 
+    size = siz; 
+    align = al;
+    ac = a;
+    hp = h;
+    cp = c;
     puntos_de_vida = vida;
 }
 
-std::string monstruo::getName() {
+std::string Monstruo::getName() {
     return name;
 }
 
-std::string monstruo::getType() {
+std::string Monstruo::getType() {
     return type;
 }
 
-std::string monstruo::getSize(){
+std::string Monstruo::getSize(){
     return size;
 }
 
-std::string monstruo::getAlign() {
+std::string Monstruo::getAlign() {
     return align;
 }
 
-int monstruo::getAC (){
+int Monstruo::getAC (){
     return ac;
 }
 
-int monstruo::getHP() {
+int Monstruo::getHP() {
     return hp;
 }
 
-int monstruo::getCR() {
+double Monstruo::getCR() {
     return cr;
 }
 
-int monstruo::getPuntosDeVida () {
+double Monstruo::getPuntosDeVida () {
     return puntos_de_vida;
 }
 
-std::string monstruo::setName(std::string newName) {
+void Monstruo::setName(std::string newName) {
     name = newName;
 }
 
-std::string monstruo::setType(std::string newType) {
+void Monstruo::setType(std::string newType) {
     type = newType;
 }
 
-std::string monstruo::setSize(std::string newSize){
+void Monstruo::setSize(std::string newSize){
     size = newSize;
 }
 
-std::string monstruo::setAlign(std::string newAlign) {
+void Monstruo::setAlign(std::string newAlign) {
     align = newAlign;
 }
 
-int monstruo::setAC(int newAc){
+void Monstruo::setAC(int newAc){
     ac = newAc;
 }
 
-int monstruo::setHP(int newHP) {
+void Monstruo::setHP(int newHP) {
     hp = newHP;
 }
 
-double monstruo::setCR(double newCR) {
+void Monstruo::setCR(double newCR) {
     cr = newCR;
 }
 
-double monstruo::setPuntosDeVida(double newVida) {
+void Monstruo::setPuntosDeVida(double newVida) {
     puntos_de_vida = newVida;
 }
 
-void monstruo::mostrarInformacion(){
+void Monstruo::mostrarInformacion(){
     std::cout << "=== Información del monstruo ===\n";
     std::cout << " Nombre: " << name << std::endl;
     std::cout << " Tipo: " << type << std::endl;

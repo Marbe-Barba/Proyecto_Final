@@ -1,12 +1,11 @@
+#pragma once
 #include <iostream>
 #include <string>
 
-class monstruo {
+class Monstruo {
 public: 
-    //se puede no poner el constructor sin parametros
-    // si se van a utilizar los datos de la tabla, es necesario hacer las clases?
-    monstruo();
-    monstruo(string nam, string typ, string tamaño, string categoria, int clase, int golpe, double dificultad, double vida);
+    Monstruo();
+    Monstruo(std::string nam, std::string typ, std::string siz, std::string al, int a, int h, double c, double vida);
 
     std::string getName();
     std::string getType();
@@ -17,16 +16,21 @@ public:
     double getCR();
     double getPuntosDeVida();
     
-    std::string setName(std::string newName);
-    std::string setType(std::string newType);
-    std::string setSize(std::string newSize);
-    std::string setAlign(std::string newAlign);
-    int setAC(int newAc);
-    int setHP(int newHP);
-    double setCR(double newCR);
-    double setPuntosDeVida(double newVida);
+    void setName(std::string newName);
+    void setType(std::string newType);
+    void setSize(std::string newSize);
+    void setAlign(std::string newAlign);
+    void setAC(int newAc);
+    void setHP(int newHP);
+    void setCR(double newCR);
+    void setPuntosDeVida(double newVida);
 
     void mostrarInformacion();
+    
+    friend std::ostream& operator<<(std::ostream& os, const Monstruo& monstruo){
+        os << monstruo.name << ", type : " << monstruo.type << ", size : " << monstruo.size << ", align : " << monstruo.align << ", ac : " << monstruo.ac << ", hp : " << monstruo.hp << ", cr : " << monstruo.cr << ", vida : " << monstruo.puntos_de_vida;
+        return os;
+    }
 
 private:
 //Atributos del monstruo
@@ -38,4 +42,4 @@ private:
     int hp;
     double cr;
     double puntos_de_vida;
-}
+};

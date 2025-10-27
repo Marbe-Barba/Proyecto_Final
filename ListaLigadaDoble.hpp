@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#iclude "Cuartos.hpp"
+#include "Cuartos.hpp"
 
 template <typename T>
 class ListaLigadaDoble{
@@ -23,8 +23,7 @@ public:
     bool insertarFinal(T dato);
     void imprimeLista();
     void borrarLista();
-    bool eliminaElemento(T dato);
-
+    
 }
 
 #include "ListaLigada.tpp"

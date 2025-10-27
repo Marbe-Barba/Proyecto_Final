@@ -5,17 +5,21 @@
 
 class Jugador {
 public: 
-    jugador();
-    ~jugador();
+    Jugador();
+    Jugador(std::string nombre);
+    ~Jugador();
 
     std::string getUsuario();
-    std::strring setUsuario();
+    void setUsuario();
 
     void agregarVencidos(Monstruo);
     void mostrarVencidos();
 
 
+    void agregarVencidos(Monstruo *m);
+    void mostrarVencidos();
+
 private:
     std::string usuario;
-    ListaLigada <T> Vencidos;
+    ListaLigada <Monstruo*> Vencidos;
 }

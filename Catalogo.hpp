@@ -1,39 +1,28 @@
 #include <iostream>
-#include <cstdlib>
-#include "monstruo.hpp"
+#pragma once
+#include <string>
+#include <random>
+#include "Monstruo.hpp"
+#include "ArbolBinario.hpp"
 
-
-template <typename T>
-
-class catalogo{
-private:
-    class Nodo{
-    public:
-        T dato;
-        Nodo<T> *izquierda;
-        Nodo<T> *derecha;
-
-        Nodo (T nDato);
-    };
-
-    int cantidad;
-    void agregarRecursivo(Nodo*& nodo, T valor);
-    void mostrarRecursivo(Nodo *nodo);
-    void buscarNumero(Nodo* nodo, int& contador, int elegido, T& resultado);
-
-public:
-    catalogo();
-    ~catalogo();
-    
-    void agregarFinal(T valor);
-    void mostrar();
-    T aleatorio();
-
-    void agregarMonstruo (Monstruo m);
-    void mostrarCatalogo();
-    Monstruo generarAleatorio();
-    void cargarCSV (std::string& nombreArchivo);
-
+// Comparador por nombre para el BST
+struct ComparadorMonstruo {
+    bool operator()(const Monstruo& a, const Monstruo& b) const {
+        return a.getName() < b.getName();
+    }
 };
 
-#include "catalogo.cpp"
+class Catalogo {
+public:
+    Catalogo();
+
+    bool cargarDesdeCSV(const std::string& rutaArchivo); // carga los monstruos desde CSV
+    const Monstruo* getMonstruoAleatorio();               // retorna puntero a monstruo aleatorio
+    std::size_t cantidad() const;                         // retorna cuántos monstruos hay
+    void mostrarCatalogo() const;                         // imprime todos los monstruos ordenados
+
+private:
+    BST<Monstruo, ComparadorMonstruo> arbol;
+    std::mt19937 generador;                               // generador de números aleatorios
+};
+

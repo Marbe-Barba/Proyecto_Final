@@ -17,10 +17,12 @@ private:
 public:
     ListaLigada();
     ~ListaLigada();
+
     bool insertarFinal(T dato);
-    void imprimeLista();
     void borrarLista();
-    bool eliminaElemento(T dato);
+    // No entiendo el insertar por orden
+    /*void insertarOrden(T dato, Comparador comparar);*/
+    void imprimeLista();
 
 }
 

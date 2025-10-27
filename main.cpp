@@ -1,32 +1,25 @@
 #include <iostream>
 #define NUM_CUARTOS 20
 
-int main (){
-    Catalogo miCatalogo;
-    Dungeon  miDungeon;
+#include "Catalogo.hpp"
+#include "Calabozo.hpp"
 
-    if(!miCatalogo.loadFromCSV("monsters.csv")){
-        std::cout << "No se pudo crear el catálogo " << std::endl;
+int main() {
+    Catalogo miCatalogo;
+    Calabozo miCalabozo;
+
+    if (!miCatalogo.cargarDesdeCSV("monstruos.csv")) {
+        std::cout << "No se pudo crear el catálogo" << std::endl;
         return 0;
     }
 
-    std::cout << "Creando Dungeon ... " << endl;
-    for (int c = 0; c < NUM_CUARTOS; c++){
-        Monster *pMonster = nullptr, copiaMonstruo;
+    std::cout << "Creando Calabozo ..." << std::endl;
 
-        pMonster = miCatalogo.getRandimMonster();
-        if (!pMonster){
-            std::cout << "No se pudo obtener un monstruo del catálogo" << std::endl;
-            return 0;
-        }
+    // Llena automáticamente 20 cuartos con monstruos aleatorios del catálogo
+    miCalabozo.generarCalabozo(&miCatalogo);
 
-        copiaMonstruo = *pMonster;
-        if (!miDungeon.createRoom(copiaMonstruo)){
-            std::cout << "No se pudo insertar cuarto con monstruo al calabozo" << std::endl;
-            return 0;
-        }
-    }
+    // Muestra los cuartos del calabozo
+    miCalabozo.mostrarCalabozo();
 
-    miDungeon.imprimeCuartos();
     return 0;
 }

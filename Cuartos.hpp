@@ -1,15 +1,27 @@
 #include <iostream>
+#include "Monsruo.hpp"
 
-class cuartos {
+class Cuartos {
 public: 
-    cuartos();
-    ~cuartos();
-    void agregarMonstruo(monstruo& m);
-    std::string getDescripcion();
-    voir explorar(Jugador& jugador)
-private:
-    std::string descripcion;
-    Monstruo* monstruo;
-    bool explorando;
+    Monstruo monstruo;
 
+    Cuartos();
+    CuartoS(int idCuarto, Monstruo* m);
+    ~Cuartos();
+
+    int getId();
+    void setId(int idCuarto);
+
+    Monstruo* getMonstruo();
+    setMonstruo(Monstruo* m);
+
+    void mostrar();
+    
+    friend std::ostream& operator<<(std::ostream& os, const Cuarto& room){
+        os << "Cuarto con: " << room.monstruo;
+        return os;
+    }
+
+private:
+    int id;
 }

@@ -1,11 +1,17 @@
 #include <iostream>
-#include "ListaDoble.hpp"
+#include "ListaLigadaDoble.hpp"
 
 
-class calabozo {
+class Calabozo {
 public: 
-    void mostrarCalabozo();
-    
+    Calabozo();
+    Calabozo(Catalogo* cat);  
+    ~Calabozo();
+
+
+    void generarCalabozo(Catalogo* cat);  
+    void mostrarCalabozo();   
+
 private:
-    ListaDoble<Cuarto> cuartos;
+    ListaDoble<Cuartos> cuartos;
 }

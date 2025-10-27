@@ -6,77 +6,108 @@
 
 ```mermaid
 classDiagram
-class Monstruo {
-  - string name
-  - string type
-  - string size
-  - string align
-  - int ac
-  - int hp
-  - double cr
-  - double puntos_de_vida
-  + getName() string
-  + getType() string
-  + getSize() string
-  + getAlign() string
-  + getAC() int
-  + getHP() int
-  + getCR() double
-  + getPuntosDeVida() double
-  + setName(string n) string
-  + setType(string t) string
-  + setSize(string s) string
-  + setAlign(string al) string
-  + setAC(int a) int
-  + setHP(int h) int
-  + setCR(int c) double
-  + setPuntosDeVida (int p) double
-  + mostrarInformacion() void
-}
+    class Monstruo {
+        -name: string
+        -type: string
+        -size: string
+        -align: string
+        -ac: int
+        -hp: int
+        -cr: double
+        -puntos_de_vida: double
+        +Monstruo()
+        +Monstruo(nam, typ, siz, al, a, h, c, vida)
+        +getName(): string
+        +getType(): string
+        +getSize(): string
+        +getAlign(): string
+        +getAC(): int
+        +getHP(): int
+        +getCR(): double
+        +getPuntosDeVida(): double
+        +setName(newName: string)
+        +setType(newType: string)
+        +setSize(newSize: string)
+        +setAlign(newAlign: string)
+        +setAC(newAc: int)
+        +setHP(newHP: int)
+        +setCR(newCR: double)
+        +setPuntosDeVida(newVida: double)
+        +mostrarInformacion()
+        +operator<(otro: Monstruo): bool
+        +operator<<(ostream, Monstruo)
+    }
 
 class Catalogo {
-  - ArbolBinario<Monstruo> arbolito
-  + subirDesdeCSV(monsters.csv string)
-  + obtenerMontruoAleatorio() Monstruo
+       -arbol: ArbolBinario<Monstruo>
+        +Catalogo()
+        +~Catalogo()
+        +cargarCSV(archivo: string): bool
+        +obtenerMonstruoAleatorio(): Monstruo*
+        +mostrarCatalogo()
 }
 
 class Cuartos {
-  - Monstruo monstruo
-  + insertarMonstruo() void
-  + getMonstruo() Monstruo
+-id: int
+        -monstruo: Monstruo*
+        +Cuartos()
+        +Cuartos(idCuarto: int, m: Monstruo*)
+        +getId(): int
+        +setId(idCuarto: int)
+        +getMonstruo(): Monstruo*
+        +setMonstruo(m: Monstruo*)
+        +mostrar()
+        +operator<<(ostream, Cuartos)
 }
 
 class Calabozo {
-  - ListaLigada<Cuartos> cuartos
-  + mostrarCalabozo()
-
+     -cuartos: ListaDoble<Cuartos>
+        +Calabozo()
+        +Calabozo(c: Catalogo*)
+        +~Calabozo()
+        +generarCalabozo(c: Catalogo*)
+        +mostrarCalabozo()
 }
 
 class Jugador {
-  - string usuario
-  - ListaLigada<Monstruo> Vencidos
-  + agregarVencidos (Monstruo)
-  + muestraVencidos()
+        -usuario: string
+        -vencidos: ListaLigada<Monstruo*>
+        +Jugador()
+        +Jugador(nombre: string)
+        +~Jugador()
+        +getUsuario(): string
+        +setUsuario(nombre: string)
+        +agregarVencidos(m: Monstruo*)
+        +mostrarVencidos()
 }
 
 
 class ArbolBinario~T~ {
-
+    -raiz: Nodo*
+    +ArbolBinario()
+    +~ArbolBinario()
+    +inserta(dato: T)
+    +BorrarArbol()
+    +buscarPorNumero(elegido: int): T*
 }
 
 class ListaLigadaDoble~T~ {
-  - Node* comiezo
-  - Node* final
-  + append(T)
-  + print()
+    -head: Nodo*
+    -tail: Nodo*
+    +ListaDoble()
+    +~ListaDoble()
+    +insertarFinal(dato: T)
+    +imprimeLista()
+    +borrarLista()
 }
 
 class ListaLigada~T~ {
-  - Node* head
-  + ListaLigada()
-  + ~ListaLigada()
-  + borrarLista()
-  + mostarLista()
+    -head: Nodo*
+    +ListaLigada()
+    +~ListaLigada()
+    +insertarFinal(dato: T)
+    +imprimeLista()
+    +borrarLista()
 }
 
 
